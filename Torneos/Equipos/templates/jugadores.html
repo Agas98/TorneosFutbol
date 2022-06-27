@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+{% if buscador %}
+<h6>Resultado de la busqueda de: {{nombre}}</h6>
+{% else %}
+<h3>Podes buscar un jugador:</h3>
+
+<form action="buscarJugador/" method="GET">
+
+    <input type="text" name="nombre" id="nombre" placeholder="Nombre del Jugador">
+
+    <input type="submit" value="Buscar">
+
+</form>
+<br>
+{% endif %}
+
+{% for jugador in jugadores %}
+
+            <h2>{{jugador.nombre}} {{jugador.apellido}}</h2>
+            <p>{{jugador.equipo}}</p>
+            <p>{{jugador.posicion}}</p>
+            <br>
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'formularioJugadores' %}">Agregar otro Jugador</a>
+{% if buscador %}
+<a class="btn btn-primary" href="{% url 'Jugadores' %}">Volver</a>
+{% endif %}
+
+{% endblock %}

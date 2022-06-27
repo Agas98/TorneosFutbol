@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+{% if buscador %}
+<h6>Resultado de la busqueda de: {{nombre}}</h6>
+{% else %}
+<h3>Podes buscar un equipo:</h3>
+
+<form action="buscarEquipo/" method="GET">
+
+    <input type="text" name="nombre" id="nombre" placeholder="Nombre del Equipo">
+
+    <input type="submit" value="Buscar">
+
+</form>
+<br>
+{% endif %}
+
+{% if equipos %}
+<div class="row my-4 text-center">
+{% for equipo in equipos %}
+
+<div class="col-md-4 p-4">
+    <div class="card bg-black card-project">
+        <div class="card-body">
+            <h2>{{equipo.nombre}}</h2>
+            <p>DT: {{equipo.nombre_DT}}</p>
+            {% if equipo.escudo %}
+            <img src="{{equipo.escudo.url}}" alt="" class="img-fluid">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+<br>
+<a class="btn btn-primary" href="{% url 'formularioEquipos' %}">Agregar otro Equipo</a>
+{% if buscador %}
+<a class="btn btn-primary" href="{% url 'Equipos' %}">Volver</a>
+{% endif %}
+{% endif %}
+{% endblock %}
