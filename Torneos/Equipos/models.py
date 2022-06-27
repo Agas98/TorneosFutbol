@@ -1,12 +1,20 @@
+
 from django.db import models
 from django.db.models import CharField, ImageField, IntegerField, ForeignKey
+class Torneos(models.Model):
+    nombre = CharField(max_length=30)
+    cantidad_equipos = IntegerField(max_length=30)
+    cantidad_jugadores_por_lado = IntegerField(max_length=10)
 
+    def __str__(self):
+        return f"{self.nombre}"
 class Equipos(models.Model):
     nombre = CharField(max_length=30)
     abreviatura = CharField(max_length=8)
     nombre_DT = CharField(max_length=20)
     cant_jugadores = IntegerField(max_length=35)
     escudo = ImageField(upload_to='Equipos/escudos/', blank=True, null=True)
+    torneo_equipo = ForeignKey(Torneos, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f"{self.nombre} / DT: {self.nombre_DT}"
@@ -26,11 +34,3 @@ class Jugadores(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} / Dorsal: {self.dorsal} / {self.equipo.nombre} / {self.posicion}"
-
-class Torneos(models.Model):
-    nombre = CharField(max_length=30)
-    cantidad_equipos = IntegerField(max_length=30)
-    cantidad_jugadores_por_lado = IntegerField(max_length=10)
-
-    def __str__(self):
-        return f"{self.nombre}"

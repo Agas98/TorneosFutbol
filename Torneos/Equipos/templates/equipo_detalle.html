@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% if equipos.escudo %}
+<img src="{{ equipos.escudo.url }}" alt="" class="img-fluid">
+{% endif %}
+
+<p>Nombre del equipo: <i>{{ equipos.nombre }}</i></p>
+<p>Abreviatura: <i>{{ equipos.abreviatura }}</i></p>
+<p>DT: <i>{{ equipos.nombre_DT }}</i></p>
+<p>Cantidad de jugadores: <i>{{ equipos.cant_jugadores }}</i></p>
+<p>Torneo: <i>{{ equipos.torneo_equipo }}</i></p>
+
+<a class="btn btn-primary" href="{% url 'Equipos' %}">Regresar</a>
+
+{% endblock %}

@@ -35,9 +35,6 @@ def formularioEquipos(request):
 
     return render(request, "formularioEquipos.html", {"equipoFormulario": equipoFormulario})
 
-def equipos(request):
-    return render(request, "equipos.html", {"equipos": Equipos.objects.all()})
-
 def formularioJugadores(request):
 
     if request.method == 'POST':
@@ -74,8 +71,36 @@ def buscarJugador(request):
         return render(request, "jugadores.html", {"jugadores": jugadores, "buscador": buscador, "nombre": nombre})
 
 def buscarEquipo(request):
+
     if request.GET:
         nombre = request.GET['nombre']
         buscador = 1    #para activar el boton "Volver"
         equipos = Equipos.objects.filter(nombre__icontains=nombre)
-        return render(request, "equipos.html", {"equipos": equipos, "buscador": buscador, "nombre": nombre})
+        return render(request, "equiposBuscar.html", {"equipos": equipos, "buscador": buscador, "nombre": nombre})
+
+class EquiposList(ListView):
+
+    model = Equipos 
+    template_name = "equipos.html"
+
+class EquipoDetalle(DetailView):
+
+    model = Equipos
+    template_name = "equipo_detalle.html"
+
+class EquipoCreacion(CreateView):
+
+    model = Equipos
+    success_url = "/equipos/list"
+    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo']
+
+class EquipoEditar(UpdateView):
+
+    model = Equipos
+    success_url = "/equipos/list"
+    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo']
+
+class EquipoEliminar(DeleteView):
+
+    model = Equipos
+    success_url = "/equipos/list"

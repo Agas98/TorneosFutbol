@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos_List</title>
+</head>
+<body>
+
+    <h1>Cursos de Coder - Python</h1>
+    <ul>
+        {% for equipo in object_list %}
+
+            <li>
+                <p>NOMBRE: {{ equipo.nombre }} </p>
+                <p> 
+                    <a href="{% url 'Detalle' equipo.id %}">Ver</a> | 
+                    <a href="{% url 'Editar' equipo.id %}">Editar</a> | 
+                    <a href="{% url 'Eliminar' equipo.id %}">Borrar</a> 
+                
+                </p> 
+            </li>
+
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'Nuevo'  %}">Nuevo</a> | 
+
+
+</body>
+</html>
