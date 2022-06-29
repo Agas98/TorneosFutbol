@@ -31,9 +31,9 @@
             <img src="{{equipo.escudo.url}}" alt="" class="img-fluid">
             {% endif %}
             <p> 
-                <a class="btn btn-secondary" href="{% url 'Detalle' equipo.id %}">Ver</a> 
-                <a class="btn btn-secondary" href="{% url 'Editar' equipo.id %}">Editar</a> 
-                <a class="btn btn-secondary" href="{% url 'Eliminar' equipo.id %}">Borrar</a> 
+                <a class="btn btn-secondary" href="{% url 'DetalleEquipo' equipo.id %}">Ver</a> 
+                <a class="btn btn-secondary" href="{% url 'EditarEquipo' equipo.id %}">Editar</a> 
+                <a class="btn btn-secondary" href="{% url 'EliminarEquipo' equipo.id %}">Borrar</a> 
             
             </p> 
         </div>
@@ -43,7 +43,7 @@
 {% endfor %}
 </div>
 <br>
-<a class="btn btn-primary" href="{% url 'formularioEquipos' %}">Agregar otro Equipo</a>
+<a class="btn btn-primary" href="{% url 'NuevoEquipo' %}">Agregar otro Equipo</a>
 {% if buscador %}
 <a class="btn btn-primary" href="{% url 'Equipos' %}">Volver</a>
 {% endif %}

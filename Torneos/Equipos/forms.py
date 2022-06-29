@@ -7,6 +7,7 @@ class EquiposFormulario(forms.Form):
     nombre_DT = forms.CharField(max_length=20)
     cant_jugadores = forms.IntegerField(max_value=35)
     escudo = forms.ImageField(required=False)
+    torneo_equipo = forms.ModelChoiceField(Torneos.objects.all())
 
 class JugadoresFormulario(forms.Form):
     nombre = forms.CharField(max_length=30)

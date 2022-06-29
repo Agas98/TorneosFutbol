@@ -15,26 +15,6 @@ def inicio(request):
 
     return render(request, "inicio.html")
 
-def formularioEquipos(request):
-
-    if request.method == 'POST':
-
-        equipoFormulario = EquiposFormulario(request.POST, request.FILES)
-
-        if equipoFormulario.is_valid:
-
-            equipo = Equipos(nombre=request.POST['nombre'], nombre_DT=request.POST['nombre_DT'], abreviatura=request.POST['abreviatura'], cant_jugadores=request.POST['cant_jugadores'], escudo=request.FILES['escudo'])
-
-            equipo.save()
-
-            return redirect("/equipos/")
-
-    else:
-
-        equipoFormulario = EquiposFormulario()
-
-    return render(request, "formularioEquipos.html", {"equipoFormulario": equipoFormulario})
-
 def formularioJugadores(request):
 
     if request.method == 'POST':
@@ -78,6 +58,7 @@ def buscarEquipo(request):
         equipos = Equipos.objects.filter(nombre__icontains=nombre)
         return render(request, "equiposBuscar.html", {"equipos": equipos, "buscador": buscador, "nombre": nombre})
 
+
 class EquiposList(ListView):
 
     model = Equipos 
@@ -91,16 +72,19 @@ class EquipoDetalle(DetailView):
 class EquipoCreacion(CreateView):
 
     model = Equipos
-    success_url = "/equipos/list"
-    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo']
+    success_url = "/equipos/"
+    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo', 'torneo_equipo']
+    template_name_suffix = '_nuevo'
 
 class EquipoEditar(UpdateView):
 
     model = Equipos
-    success_url = "/equipos/list"
-    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo']
+    success_url = "/equipos/"
+    fields  = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo', 'torneo_equipo']
+    template_name_suffix = '_actualizar'
 
 class EquipoEliminar(DeleteView):
 
     model = Equipos
-    success_url = "/equipos/list"
+    success_url = "/equipos/"
+    template_name_suffix = '_eliminar'
