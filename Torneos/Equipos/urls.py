@@ -1,6 +1,7 @@
 from django.urls import path
 
 from Equipos import views
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
@@ -14,6 +15,10 @@ urlpatterns = [
     path('equiposEditar/'r'^(?P<pk>\d+)$', views.EquipoEditar.as_view(), name='EditarEquipo'),
     path('equiposBorrar/'r'^(?P<pk>\d+)$', views.EquipoEliminar.as_view(), name='EliminarEquipo'),
     path('equiposNuevo/', views.EquipoCreacion.as_view(), name='NuevoEquipo'),
+
+    path('login/', views.login_request, name="Login"),
+    path('register/', views.register, name="Registro"),
+    path('logout/', views.logout, name="Logout"),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!

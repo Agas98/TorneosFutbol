@@ -2,6 +2,7 @@
 
 <form action="" method="POST">
     {% csrf_token %}
-
+    {{mensaje}}
     {{form.as_p}}
+    <button type="submit">Iniciar sesion</button>
 </form>

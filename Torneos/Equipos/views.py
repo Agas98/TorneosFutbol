@@ -1,3 +1,4 @@
+from multiprocessing import AuthenticationError
 from typing import List
 from django.http.request import QueryDict
 from django.shortcuts import redirect, render, HttpResponse
@@ -10,6 +11,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def inicio(request):
 
@@ -88,3 +92,50 @@ class EquipoEliminar(DeleteView):
     model = Equipos
     success_url = "/equipos/"
     template_name_suffix = '_eliminar'
+
+def login_request(request):
+
+    if request.method == 'POST':
+
+        form = AuthenticationForm(request, data = request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                
+                login(request, user)
+
+                return render(request, "inicio.html", {"mensaje": "Bienvenido " + username})
+
+            else:
+
+                return render(request, "login.html", {"mensaje": "Usuario o contraseña incorrectos"})
+        
+        else:
+            return render(request, "login.html", {"mensaje": "Formulario erroneo"})
+
+    form = AuthenticationForm()
+
+    return render(request, "login.html", {"form": form})
+
+def register(request):
+
+    if request.method == 'POST':
+
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            form.save()
+            return redirect("/login/")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "register.html", {"form": form})
+
+def logout(request):
+    return render(request, "logout.html")
