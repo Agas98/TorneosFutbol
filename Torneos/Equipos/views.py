@@ -15,8 +15,11 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-def inicio(request):
+from django.contrib.auth.decorators import login_required
 
+@login_required
+def inicio(request):
+    
     return render(request, "inicio.html")
 
 def formularioJugadores(request):
@@ -63,7 +66,7 @@ def buscarEquipo(request):
         return render(request, "equiposBuscar.html", {"equipos": equipos, "buscador": buscador, "nombre": nombre})
 
 
-class EquiposList(ListView):
+class EquiposList(LoginRequiredMixin,ListView):
 
     model = Equipos 
     template_name = "equipos.html"

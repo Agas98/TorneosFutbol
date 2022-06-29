@@ -1,3 +1,4 @@
+from re import template
 from django.urls import path
 
 from Equipos import views
@@ -18,7 +19,7 @@ urlpatterns = [
 
     path('login/', views.login_request, name="Login"),
     path('register/', views.register, name="Registro"),
-    path('logout/', views.logout, name="Logout"),
+    path('logout/', LogoutView.as_view(template_name='logout.html'), name="Logout"),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!
