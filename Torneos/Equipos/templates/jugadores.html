@@ -18,14 +18,18 @@
 <br>
 {% endif %}
 
-{% for jugador in jugadores %}
+{% for jugador in object_list %}
 
             <h2>{{jugador.nombre}} {{jugador.apellido}}</h2>
             <p>{{jugador.equipo}}</p>
             <p>{{jugador.posicion}}</p>
+            <p> 
+                <a class="btn btn-secondary" href="{% url 'EditarJugador' jugador.id %}">Editar</a> 
+                <a class="btn btn-secondary" href="{% url 'EliminarJugador' jugador.id %}">Borrar</a> 
+            </p> 
             <br>
 {% endfor %}
-<a class="btn btn-primary" href="{% url 'formularioJugadores' %}">Agregar otro Jugador</a>
+<a class="btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
 {% if buscador %}
 <a class="btn btn-primary" href="{% url 'Jugadores' %}">Volver</a>
 {% endif %}

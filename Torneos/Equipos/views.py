@@ -22,31 +22,6 @@ def inicio(request):
     
     return render(request, "inicio.html")
 
-def formularioJugadores(request):
-
-    if request.method == 'POST':
-
-        jugadorFormulario = JugadoresFormulario(request.POST, request.FILES)
-
-        if jugadorFormulario.is_valid:
-
-            jugador = Jugadores(
-            nombre=request.POST['nombre'],
-            apellido=request.POST['apellido'],
-            dorsal=request.POST['dorsal'],
-            equipo=Equipos.objects.get(id=request.POST['equipo']),
-            posicion=PosicionesJugadores.objects.get(id=request.POST['posicion']))
-
-            jugador.save()
-
-            return redirect("/jugadores/")
-
-    else:
-
-        jugadorFormulario = JugadoresFormulario()
-
-    return render(request, "formularioJugadores.html", {"jugadorFormulario": jugadorFormulario})
-
 def jugadores(request):
     return render(request, "jugadores.html", {"jugadores": Jugadores.objects.all()})
 
@@ -95,6 +70,36 @@ class EquipoEliminar(DeleteView):
     model = Equipos
     success_url = "/equipos/"
     template_name_suffix = '_eliminar'
+
+class JugadoresList(ListView):
+
+    model = Jugadores 
+    template_name = "jugadores.html"
+
+class JugadorCreacion(CreateView):
+
+    model = Jugadores
+    success_url = "/jugadores/"
+    fields  = ['nombre', 'apellido', 'dorsal', 'equipo', 'posicion']
+    template_name_suffix = '_nuevo'
+
+class JugadorEditar(UpdateView):
+
+    model = Jugadores
+    success_url = "/jugadores/"
+    fields  = ['nombre', 'apellido', 'dorsal', 'equipo', 'posicion']
+    template_name_suffix = '_actualizar'
+
+class JugadorEliminar(DeleteView):
+
+    model = Jugadores
+    success_url = "/jugadores/"
+    template_name_suffix = '_eliminar'
+
+class JugadoresEquipo(ListView):
+
+    model = Jugadores 
+    template_name = "equipo_detalle_jugadores.html"
 
 def login_request(request):
 

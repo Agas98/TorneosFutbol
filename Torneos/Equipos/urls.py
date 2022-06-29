@@ -6,8 +6,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
-    path('jugadores/', views.jugadores, name="Jugadores"),
-    path('jugadores/cargarJugadores/', views.formularioJugadores, name="formularioJugadores"),
+    #path('jugadores/', views.jugadores, name="Jugadores"),
+    #path('jugadores/cargarJugadores/', views.formularioJugadores, name="formularioJugadores"),
     path('jugadores/buscarJugador/', views.buscarJugador, name="buscarJugador"),
 
     path('equipos/', views.EquiposList.as_view(), name='Equipos'),
@@ -16,6 +16,11 @@ urlpatterns = [
     path('equiposEditar/'r'^(?P<pk>\d+)$', views.EquipoEditar.as_view(), name='EditarEquipo'),
     path('equiposBorrar/'r'^(?P<pk>\d+)$', views.EquipoEliminar.as_view(), name='EliminarEquipo'),
     path('equiposNuevo/', views.EquipoCreacion.as_view(), name='NuevoEquipo'),
+
+    path('jugadores/', views.JugadoresList.as_view(), name='Jugadores'),
+    path('jugadoresNuevo/', views.JugadorCreacion.as_view(), name='NuevoJugador'),
+    path('jugadoresEditar/'r'^(?P<pk>\d+)$', views.JugadorEditar.as_view(), name='EditarJugador'),
+    path('jugadoresBorrar/'r'^(?P<pk>\d+)$', views.JugadorEliminar.as_view(), name='EliminarJugador'),
 
     path('login/', views.login_request, name="Login"),
     path('register/', views.register, name="Registro"),
