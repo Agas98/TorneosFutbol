@@ -4,11 +4,14 @@
 
 {% block content %}
 
-
+<div class="d-flex flex-column justify-content-center align-items-center">
     <form method="post">{% csrf_token %}
-        ¿Estás seguro que deseas borrar el equipo "{{ object }}"?
-        <input class="btn btn-primary" type="submit" value="Eliminar" />
-        <a href="{% url 'DetalleEquipo' equipos.id %}">Regresar</a>
+        <p class="font-weight-bold">¿Estás seguro que deseas borrar el equipo "{{ equipos.nombre }}"?</p>
+        <div class="d-flex flex-row justify-content-center">
+            <input class="m-3 btn btn-primary" type="submit" value="Eliminar" />
+            <a class="m-3 btn btn-secondary" href="{% url 'DetalleEquipo' equipos.id %}">Regresar</a>
+        </div>
     </form>
+</div>
 
 {% endblock %}

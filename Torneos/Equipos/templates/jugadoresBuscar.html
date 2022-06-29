@@ -4,23 +4,22 @@
 
 {% block content %}
 {% if buscador %}
-<h6>Resultado de la busqueda de: {{nombre}}</h6>
+<h5>Resultado de la busqueda de: "{{nombre}}"</h5>
 {% else %}
-<div class="col text-center">
-    <h3>Podes buscar un jugador:</h3>
+<h3>Podes buscar un jugador:</h3>
 
-    <form action="buscarJugador/" method="GET">
+<form action="buscarJugador/" method="GET">
 
-        <input type="text" name="nombre" id="nombre" placeholder="Nombre del Jugador">
+    <input type="text" name="nombre" id="nombre" placeholder="Nombre del Jugador">
 
-        <input type="submit" value="Buscar">
+    <input type="submit" value="Buscar">
 
-    </form>
-</div>
+</form>
 <br>
 {% endif %}
+{% if jugadores %}
 <div class="row my-4 text-center d-flex flex-row justify-content-center">
-    {% for jugador in object_list %}
+    {% for jugador in jugadores %}
 
     <div class="card m-2" style="width: 20rem;">
         <div class="card-body">
@@ -41,6 +40,7 @@
 <a class="btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
 {% if buscador %}
 <a class="btn btn-primary" href="{% url 'Jugadores' %}">Volver</a>
+{% endif %}
 {% endif %}
 
 {% endblock %}

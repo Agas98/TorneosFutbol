@@ -30,7 +30,7 @@ def buscarJugador(request):
         nombre = request.GET['nombre']
         buscador = 1    #para activar el boton "Volver"
         jugadores = Jugadores.objects.filter(nombre__icontains=nombre)
-        return render(request, "jugadores.html", {"jugadores": jugadores, "buscador": buscador, "nombre": nombre})
+        return render(request, "jugadoresBuscar.html", {"jugadores": jugadores, "buscador": buscador, "nombre": nombre})
 
 def buscarEquipo(request):
 

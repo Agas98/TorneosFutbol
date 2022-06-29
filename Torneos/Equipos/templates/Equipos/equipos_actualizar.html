@@ -3,13 +3,13 @@
 {% load static %}
 
 {% block content %}
-    <div class="row my-4 p-2">
+<div class="row my-4 p-2">
 
-        <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
-            {{form.as_p}}
-            <input class="btn btn-primary" type="submit" value="enviar">
-            <a class="btn btn-secondary" href="{% url 'DetalleEquipo' equipos.id %}">Regresar</a>
-        </form>
-    </div>
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{form.as_p}}
+        <input class="btn btn-primary" type="submit" value="Enviar">
+        <a class="btn btn-secondary" href="{% url 'DetalleEquipo' equipos.id %}">Regresar</a>
+    </form>
+</div>
 
 {% endblock %}
