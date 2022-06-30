@@ -4,7 +4,9 @@
 
 {% block content %}
 {% if buscador %}
-<h5>Resultado de la busqueda de: "{{nombre}}"</h5>
+<div class="col text-center">
+    <h5>Resultado de la busqueda de: "{{nombre}}"</h5>
+</div>
 {% else %}
 <h3>Podes buscar un jugador:</h3>
 
@@ -31,16 +33,19 @@
             <li class="list-group-item">Dorsal: {{ jugador.dorsal }} </li>
         </ul>
         <div class="card-body">
-            <a class="m-2 btn btn-secondary" href="{% url 'EditarJugador' jugador.id %}">Editar</a>
-            <a class="m-2 btn btn-secondary" href="{% url 'EliminarJugador' jugador.id %}">Borrar</a>
+            <a class="m-2 btn btn-outline-info" href="{% url 'EditarJugador' jugador.id %}">Editar</a>
+            <a class="m-2 btn btn-outline-danger" href="{% url 'EliminarJugador' jugador.id %}">Borrar</a>
         </div>
     </div>
     {% endfor %}
 </div>
-<a class="btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
+<div class="d-flex flex-row justify-content-center">
+<a class="m-3 btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
 {% if buscador %}
-<a class="btn btn-primary" href="{% url 'Jugadores' %}">Volver</a>
+<a class="m-3 btn btn-outline-primary" href="{% url 'Jugadores' %}">Volver</a>
 {% endif %}
+</div>
+
 {% endif %}
 
 {% endblock %}

@@ -3,9 +3,6 @@
 {% load static %}
 
 {% block content %}
-{% if buscador %}
-<h6>Resultado de la busqueda de: {{nombre}}</h6>
-{% else %}
 <div class="col text-center">
     <h3>Podes buscar un jugador:</h3>
 
@@ -18,7 +15,7 @@
     </form>
 </div>
 <br>
-{% endif %}
+
 <div class="row my-4 text-center d-flex flex-row justify-content-center">
     {% for jugador in object_list %}
 
@@ -32,15 +29,14 @@
             <li class="list-group-item">Dorsal: {{ jugador.dorsal }} </li>
         </ul>
         <div class="card-body">
-            <a class="m-2 btn btn-secondary" href="{% url 'EditarJugador' jugador.id %}">Editar</a>
-            <a class="m-2 btn btn-secondary" href="{% url 'EliminarJugador' jugador.id %}">Borrar</a>
+            <a class="m-2 btn btn-outline-info" href="{% url 'EditarJugador' jugador.id %}">Editar</a>
+            <a class="m-2 btn btn-outline-danger" href="{% url 'EliminarJugador' jugador.id %}">Borrar</a>
         </div>
     </div>
     {% endfor %}
 </div>
-<a class="btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
-{% if buscador %}
-<a class="btn btn-primary" href="{% url 'Jugadores' %}">Volver</a>
-{% endif %}
+<div class="d-flex flex-row justify-content-center">
+    <a class="m-3 btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
+</div>
 
 {% endblock %}

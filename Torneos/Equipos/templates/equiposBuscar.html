@@ -4,7 +4,9 @@
 
 {% block content %}
 {% if buscador %}
-<h5>Resultado de la busqueda de: "{{nombre}}"</h5>
+<div class="col text-center">
+    <h5>Resultado de la busqueda de: "{{nombre}}"</h5>
+</div>
 {% else %}
 <h3>Podes buscar un equipo:</h3>
 
@@ -19,7 +21,7 @@
 {% endif %}
 
 {% if equipos %}
-<div class="row my-4 text-center">
+<div class="row my-4 text-center d-flex flex-row justify-content-center">
 {% for equipo in equipos  %}
 
 <div class="col-md-4 p-4">
@@ -31,9 +33,7 @@
             <img src="{{equipo.escudo.url}}" alt="" class="img-fluid">
             {% endif %}
             <p> 
-                <a class="btn btn-secondary" href="{% url 'DetalleEquipo' equipo.id %}">Ver</a> 
-                <a class="btn btn-secondary" href="{% url 'EditarEquipo' equipo.id %}">Editar</a> 
-                <a class="btn btn-secondary" href="{% url 'EliminarEquipo' equipo.id %}">Borrar</a> 
+                <a class="btn btn-secondary" href="{% url 'DetalleEquipo' equipo.id %}">Ver detalle</a> 
             
             </p> 
         </div>
@@ -43,9 +43,12 @@
 {% endfor %}
 </div>
 <br>
-<a class="btn btn-primary" href="{% url 'NuevoEquipo' %}">Agregar otro Equipo</a>
+<div class="d-flex flex-row justify-content-center">
+<a class="m-3 btn btn-primary" href="{% url 'NuevoEquipo' %}">Agregar otro Equipo</a>
 {% if buscador %}
-<a class="btn btn-primary" href="{% url 'Equipos' %}">Volver</a>
+<a class="m-3 btn btn-outline-primary" href="{% url 'Equipos' %}">Volver</a>
 {% endif %}
+</div>
 {% endif %}
+
 {% endblock %}

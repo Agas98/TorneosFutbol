@@ -17,8 +17,8 @@
             <p>Cantidad de jugadores: <i>{{ equipos.cant_jugadores }}</i></p>
             <p>Torneo: <i>{{ equipos.torneo_equipo }}</i></p>
             <div class="d-flex flex-row justify-content-center">
-                <a class="m-3 btn btn-secondary" href="{% url 'EditarEquipo' equipos.id %}">Editar</a>
-                <a class="m-3 btn btn-secondary" href="{% url 'EliminarEquipo' equipos.id %}">Borrar</a>
+                <a class="m-3 btn btn-outline-info" href="{% url 'EditarEquipo' equipos.id %}">Editar</a>
+                <a class="m-3 btn btn-outline-danger" href="{% url 'EliminarEquipo' equipos.id %}">Borrar</a>
             </div>
         </div>
     </div>
