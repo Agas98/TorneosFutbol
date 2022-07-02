@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-{{mensaje}}
-Inicio pagina
-<a class="btn btn-secondary" href="{% url 'Logout' %}">Cerrar Sesion</a>
+{% if mensaje %}
+<script>alert(`{{mensaje}}`)</script>
+{% endif %}
 {% endblock %}

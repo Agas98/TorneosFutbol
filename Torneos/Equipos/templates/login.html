@@ -2,7 +2,9 @@
 
 <form action="" method="POST">
     {% csrf_token %}
-    {{mensaje}}
+    {{ mensaje }}
     {{form.as_p}}
     <button type="submit">Iniciar sesion</button>
+    <a href="{% url 'Registro' %}">Registrarse</a>
 </form>
+
