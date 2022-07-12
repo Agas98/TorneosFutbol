@@ -1,8 +1,11 @@
 from re import template
-from django.urls import path
+from django.shortcuts import redirect
+from django.urls import path, include
 
 from Equipos import views
-from django.contrib.auth.views import LoginView, LogoutView
+from .views import RegisterView, CustomLoginView
+from .forms import LoginForm
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
@@ -20,10 +23,13 @@ urlpatterns = [
     path('jugadoresEditar/'r'^(?P<pk>\d+)$', views.JugadorEditar.as_view(), name='EditarJugador'),
     path('jugadoresBorrar/'r'^(?P<pk>\d+)$', views.JugadorEliminar.as_view(), name='EliminarJugador'),
 
-    path('login/', views.login_request, name="Login"),
-    path('register/', views.register, name="Registro"),
-    path('logout/', LogoutView.as_view(template_name='logout.html'), name="Logout"),
-    path('editarPerfil/', views.editarPerfil, name="EditarPerfil"),
+    path('torneos/', views.torneos, name="Torneos"),
+
+    path("__reload__/", include("django_browser_reload.urls")),
+
+    path('registro/', RegisterView.as_view(), name="Registro"),
+    path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login.html', authentication_form=LoginForm), name="Login"),
+    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="Logout"),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!

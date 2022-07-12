@@ -1,2 +1,14 @@
-<h1>deslogueado</h1>
-<button><a href="{% url 'Inicio' %}">Inicio</a></button>
+{% extends "base.html" %}
+{% block content %}
+    <div class="card m-auto" style="width: 18rem;">
+        <div class="card-body">
+        <h5 class="card-title text-center">Cerraste sesion</h5>
+        <p class="card-text">
+            Gracias por tu tiempo. Cualquier sugerencia no dude en contactarnos.
+        </p>
+        <br><hr><a href="{% url 'Login' %}" class="btn btn-primary">Iniciar sesion nuevamente</a>
+        </div>
+    </div>
+
+
+{% endblock content %}

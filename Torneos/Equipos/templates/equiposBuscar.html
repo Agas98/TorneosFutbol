@@ -3,23 +3,10 @@
 {% load static %}
 
 {% block content %}
-{% if buscador %}
+
 <div class="col text-center">
     <h5>Resultado de la busqueda de: "{{nombre}}"</h5>
 </div>
-{% else %}
-<h3>Podes buscar un equipo:</h3>
-
-<form action="buscarEquipo/" method="GET">
-
-    <input type="text" name="nombre" id="nombre" placeholder="Nombre del Equipo">
-
-    <input type="submit" value="Buscar">
-
-</form>
-<br>
-{% endif %}
-
 {% if equipos %}
 <div class="row my-4 text-center d-flex flex-row justify-content-center">
 {% for equipo in equipos  %}
@@ -43,12 +30,8 @@
 {% endfor %}
 </div>
 <br>
+{% endif %}
 <div class="d-flex flex-row justify-content-center">
-<a class="m-3 btn btn-primary" href="{% url 'NuevoEquipo' %}">Agregar otro Equipo</a>
-{% if buscador %}
-<a class="m-3 btn btn-outline-primary" href="{% url 'Equipos' %}">Volver</a>
-{% endif %}
+<a class="m-3 btn btn-outline-primary" href="{% url 'Equipos' %}">Regresar</a>
 </div>
-{% endif %}
-
 {% endblock %}

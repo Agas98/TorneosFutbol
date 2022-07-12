@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import CharField, ImageField, IntegerField, ForeignKey
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+
 class Torneos(models.Model):
     nombre = CharField(max_length=30)
     cantidad_equipos = IntegerField(max_length=30)

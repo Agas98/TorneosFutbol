@@ -27,6 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Equipos',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -37,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'Torneos.urls'
@@ -117,3 +122,13 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30

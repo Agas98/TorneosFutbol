@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h1>Editar Perfil</h1>
-        <h2> de {{usuario}}</h2>
-    </div>
-    <div>
-        <form action="" method="POST"> {% csrf_token %}
-            
-            <table>
-                {{miFormulario.as_table}}    
-            </table>
+{% extends "base.html" %}
 
-            <input type="submit", value="Enviar">
-        </form>
-    </div>
-</body>
-</html>
+{% load static %}
+
+{% block content %}
+<div>
+    <h1>Editar Perfil</h1>
+    <h2> de {{usuario}}</h2>
+</div>
+<div>
+    <form action="" method="POST"> {% csrf_token %}
+
+        <table>
+            {{miFormulario.as_table}}
+        </table>
+
+        <input class="btn btn-primary btn-success" type="submit" , value="Enviar">
+    </form>
+</div>
+{% endblock %}

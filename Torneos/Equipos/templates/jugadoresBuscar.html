@@ -3,22 +3,11 @@
 {% load static %}
 
 {% block content %}
-{% if buscador %}
+
 <div class="col text-center">
     <h5>Resultado de la busqueda de: "{{nombre}}"</h5>
 </div>
-{% else %}
-<h3>Podes buscar un jugador:</h3>
 
-<form action="buscarJugador/" method="GET">
-
-    <input type="text" name="nombre" id="nombre" placeholder="Nombre del Jugador">
-
-    <input type="submit" value="Buscar">
-
-</form>
-<br>
-{% endif %}
 {% if jugadores %}
 <div class="row my-4 text-center d-flex flex-row justify-content-center">
     {% for jugador in jugadores %}
@@ -40,10 +29,9 @@
     {% endfor %}
 </div>
 <div class="d-flex flex-row justify-content-center">
-<a class="m-3 btn btn-primary" href="{% url 'NuevoJugador' %}">Agregar otro Jugador</a>
-{% if buscador %}
+
 <a class="m-3 btn btn-outline-primary" href="{% url 'Jugadores' %}">Volver</a>
-{% endif %}
+
 </div>
 
 {% endif %}

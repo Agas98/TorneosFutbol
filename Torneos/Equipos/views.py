@@ -2,44 +2,41 @@ from multiprocessing import AuthenticationError
 from typing import List
 from django.shortcuts import redirect, render, HttpResponse
 from django.http import HttpResponse
-from Equipos.models import Equipos, Jugadores, PosicionesJugadores, Torneos, Avatar,User
-from Equipos.forms import EquiposFormulario, JugadoresFormulario, UserRegisterForm, UserEditForm
+from Equipos.models import Equipos, Jugadores, PosicionesJugadores, Torneos, Avatar, User
+from Equipos.forms import RegisterForm, LoginForm
 
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.contrib import messages
+from django.contrib.auth.views import LoginView
 
 
-@login_required
+
 def inicio(request):
-
-    if request.user.is_authenticated:
-        avatares = Avatar.objects.get(user=request.user)
-        return render(request, "inicio.html", {"avatar": avatares.imagen.url})
     return render(request, "inicio.html")
+
 
 def buscarJugador(request):
     if request.GET:
         nombre = request.GET['nombre']
-        buscador = 1  # para activar el boton "Volver"
         jugadores = Jugadores.objects.filter(nombre__icontains=nombre)
-        return render(request, "jugadoresBuscar.html", {"jugadores": jugadores, "buscador": buscador, "nombre": nombre})
+        return render(request, "jugadoresBuscar.html", {"jugadores": jugadores, "nombre": nombre})
 
 
 def buscarEquipo(request):
-
     if request.GET:
         nombre = request.GET['nombre']
-        buscador = 1  # para activar el boton "Volver"
         equipos = Equipos.objects.filter(nombre__icontains=nombre)
-        return render(request, "equiposBuscar.html", {"equipos": equipos, "buscador": buscador, "nombre": nombre})
+        return render(request, "equiposBuscar.html", {"equipos": equipos, "nombre": nombre})
 
 
 class EquiposList(ListView):
@@ -58,8 +55,7 @@ class EquipoCreacion(LoginRequiredMixin, CreateView):
 
     model = Equipos
     success_url = "/equipos/"
-    fields = ['nombre', 'nombre_DT', 'abreviatura',
-              'cant_jugadores', 'escudo', 'torneo_equipo']
+    fields = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo', 'torneo_equipo']
     template_name_suffix = '_nuevo'
 
 
@@ -67,8 +63,7 @@ class EquipoEditar(LoginRequiredMixin, UpdateView):
 
     model = Equipos
     success_url = "/equipos/"
-    fields = ['nombre', 'nombre_DT', 'abreviatura',
-              'cant_jugadores', 'escudo', 'torneo_equipo']
+    fields = ['nombre', 'nombre_DT', 'abreviatura', 'cant_jugadores', 'escudo', 'torneo_equipo']
     template_name_suffix = '_actualizar'
 
 
@@ -113,78 +108,51 @@ class JugadoresEquipo(ListView):
     model = Jugadores
     template_name = "equipo_detalle_jugadores.html"
 
+def torneos(request):
+    return render(request, "torneos.html")
 
-def login_request(request):
+class RegisterView(View):
+    form_class = RegisterForm
+    initial = {'key': 'value'}
+    template_name = 'register.html'
 
-    if request.method == 'POST':
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
 
-        form = AuthenticationForm(request, data=request.POST)
-
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-
-            user = authenticate(username=username, password=password)
-
-            if user is not None:
-
-                login(request, user)
-
-                return redirect('/', {"mensaje": "Usuario autenticado correctamente"})
-
-            else:
-
-                return render(request, "login.html", {"mensaje": "Usuario o contraseña incorrectos"})
-
-        else:
-            return render(request, "login.html", {"mensaje": "Usuario o contraseña incorrectos"})
-
-    form = AuthenticationForm()
-
-    return render(request, "login.html", {"form": form})
-
-
-def register(request):
-
-    if request.method == 'POST':
-
-        form = UserRegisterForm(request.POST)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data.get('username')
             form.save()
-            return redirect('/login/', {"mensaje": "Usuario creado correctamente"})
-    else:
 
-        form = UserRegisterForm()
-    return render(request, "register.html", {"form": form})
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Usuario creado exitosamente: {username}')
 
+            return redirect(to='/')
 
-def logout(request):
-    return render(request, "logout.html")
+        return render(request, self.template_name, {'form': form})
 
+class CustomLoginView(LoginView):
+    form_class = LoginForm
 
-@login_required
-def editarPerfil(request):
-    #se instancia el Login;
-    usuario = request.user
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
 
-    if request.method == 'POST':
-        miFormulario = UserEditForm(request.POST)
-        if miFormulario.is_valid():  # si pasa la validación Django
-            informacion = miFormulario.cleaned_data
+        if not remember_me:
+            # set session expiry to 0 seconds. So it will automatically close the session after the browser is closed.
+            self.request.session.set_expiry(0)
 
-            #datos que modificaríamos
-            usuario.email = informacion['email']  # alg@algo.com
-            usuario.password1 = informacion['password1']  # pass
-            usuario.password2 = informacion['password2']
-            usuario.avatar = informacion['avatar']
-            usuario.save()
+            # Set session as modified to force data updates/cookie to be saved.
+            self.request.session.modified = True
 
-            return render(request, "inicio.html",{"mensaje": "Usuario editado correctamente"})
+        # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
+        return super(CustomLoginView, self).form_valid(form)
 
-    else:
-        miFormulario = UserEditForm(initial={'email': usuario.email})
+def dispatch(self, request, *args, **kwargs):
+        # will redirect to the home page if a user tries to access the register page while logged in
+        if request.user.is_authenticated:
+            return redirect(to='/')
 
-    return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario": usuario})
-
+        # else process dispatch as it otherwise normally would
+        return super(RegisterView, self).dispatch(request, *args, **kwargs)
