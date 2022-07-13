@@ -3,9 +3,10 @@ from django.shortcuts import redirect
 from django.urls import path, include
 
 from Equipos import views
-from .views import RegisterView, CustomLoginView
+from .views import RegisterView, CustomLoginView, ResetPasswordView
 from .forms import LoginForm
 from django.contrib.auth import views as auth_views
+from django.conf.urls import url
 
 urlpatterns = [
     path('', views.inicio, name="Inicio"),
@@ -30,6 +31,11 @@ urlpatterns = [
     path('registro/', RegisterView.as_view(), name="Registro"),
     path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login.html', authentication_form=LoginForm), name="Login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="Logout"),
+    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
+
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!

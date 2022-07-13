@@ -17,8 +17,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.views import LoginView
-
+from django.contrib.auth.views import LoginView, PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 def inicio(request):
@@ -156,3 +156,13 @@ def dispatch(self, request, *args, **kwargs):
 
         # else process dispatch as it otherwise normally would
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'password_reset.html'
+    email_template_name = 'password_reset_email.html'
+    subject_template_name = 'password_reset_subject.txt'
+    success_message = "We've emailed you instructions for setting your password, " \
+                    "if an account exists with the email you entered. You should receive them shortly." \
+                    " If you don't receive an email, " \
+                    "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('Login')

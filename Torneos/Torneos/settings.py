@@ -1,6 +1,11 @@
 
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()  # loads the configs from .env
+
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,8 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3ir9et6y=p4i9$(u6oc0y_)p88isqn%x3d#&*b!-6gqhmb0w0q'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -57,6 +61,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -132,3 +138,16 @@ INTERNAL_IPS = [
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-3ir9et6y=p4i9$(u6oc0y_)p88isqn%x3d#&*b!-6gqhmb0w0q'
+
+# social auth configs for github
+SOCIAL_AUTH_GITHUB_KEY = 'e6871cf04039f3cfb17c'
+SOCIAL_AUTH_GITHUB_SECRET = '0c22588a53eebe847ef2ad54169063e09af5569e'
