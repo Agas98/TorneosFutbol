@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.urls import path, include
 
 from Equipos import views
-from .views import RegisterView, CustomLoginView, ResetPasswordView
+from .views import RegisterView, CustomLoginView
 from .forms import LoginForm
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
@@ -25,17 +25,19 @@ urlpatterns = [
     path('jugadoresBorrar/'r'^(?P<pk>\d+)$', views.JugadorEliminar.as_view(), name='EliminarJugador'),
 
     path('torneos/', views.torneos, name="Torneos"),
+    path('torneos/futbol5', views.futbol5, name="Futbol5"),
+    path('torneos/futbol8', views.futbol8, name="Futbol8"),
+    path('torneos/futbol11', views.futbol11, name="Futbol11"),
 
     path("__reload__/", include("django_browser_reload.urls")),
 
     path('registro/', RegisterView.as_view(), name="Registro"),
     path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login.html', authentication_form=LoginForm), name="Login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="Logout"),
-    path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
-    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
-    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+
+    path('construccion/', views.construccion, name="Construccion"),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!

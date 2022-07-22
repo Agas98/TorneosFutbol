@@ -10,15 +10,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import LoginView
 
 
 def inicio(request):
@@ -108,9 +106,6 @@ class JugadoresEquipo(ListView):
     model = Jugadores
     template_name = "equipo_detalle_jugadores.html"
 
-def torneos(request):
-    return render(request, "torneos.html")
-
 class RegisterView(View):
     form_class = RegisterForm
     initial = {'key': 'value'}
@@ -150,19 +145,27 @@ class CustomLoginView(LoginView):
         return super(CustomLoginView, self).form_valid(form)
 
 def dispatch(self, request, *args, **kwargs):
-        # will redirect to the home page if a user tries to access the register page while logged in
+
         if request.user.is_authenticated:
             return redirect(to='/')
 
-        # else process dispatch as it otherwise normally would
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
-class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
-    template_name = 'password_reset.html'
-    email_template_name = 'password_reset_email.html'
-    subject_template_name = 'password_reset_subject.txt'
-    success_message = "We've emailed you instructions for setting your password, " \
-                    "if an account exists with the email you entered. You should receive them shortly." \
-                    " If you don't receive an email, " \
-                    "please make sure you've entered the address you registered with, and check your spam folder."
-    success_url = reverse_lazy('Login')
+def torneos(request):
+    return render(request, "Torneos/torneos.html")
+
+def futbol5(request):
+    #filtrar solo los equipos que tengan torneo_equipo = futbol5
+    equipos = Equipos.objects.filter(torneo_equipo=1)
+    return render(request, "Torneos/futbol5.html", {"equipos": equipos})
+
+def futbol8(request):
+    equipos = Equipos.objects.filter(torneo_equipo=2)
+    return render(request, "Torneos/futbol8.html", {"equipos": equipos})
+
+def futbol11(request):
+    equipos = Equipos.objects.filter(torneo_equipo=3)
+    return render(request, "Torneos/futbol11.html", {"equipos": equipos})
+
+def construccion(request):
+    return render(request, "construccion.html")

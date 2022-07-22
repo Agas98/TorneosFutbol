@@ -27,10 +27,6 @@
                             <div class="form-row">
                                 <div class="col-md-10 offset-md-1">
                                     <div class="form-group">
-                                        <a href="{% url 'social:begin' 'github' %}" class="btn btn-link btn-lg active btn-block">Conectarse con GitHub</a>
-                                        <hr>
-                                        <p class="text-center"><strong>OR</strong></p>
-                                        <hr>
                                         <label class="small mb-1">Usuario</label>
                                         {{ form.username }}
                                     </div>
@@ -65,7 +61,6 @@
                     <div class="card-footer text-center">
                         <div class="medium">
                             <a href="{% url 'Registro' %}">No tenes una cuenta? Registrate</a><br>
-                            <a href="{% url 'password_reset' %}"><i>Olvidaste tu contraseña?</i></a>
                         </div>
                     </div>
                 </div>
