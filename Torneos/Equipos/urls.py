@@ -34,10 +34,12 @@ urlpatterns = [
     path('registro/', RegisterView.as_view(), name="Registro"),
     path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='login.html', authentication_form=LoginForm), name="Login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name="Logout"),
+    path('editarPerfil', views.editarPerfil, name="EditarPerfil"),
 
     url(r'^oauth/', include('social_django.urls', namespace='social')),
 
     path('construccion/', views.construccion, name="Construccion"),
+    path('about/', views.about, name="About"),
 ]
 
 # ACLARACIÓN IMPORTANTE!!!!!!!

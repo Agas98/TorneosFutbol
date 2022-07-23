@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Torneos Kirikocho</h1>
+            <p>Esta pagina esta dedicada a la carga de datos para una mejor experiencia y organizacion a lo largo del torneo.</p>
+            <p>Creada por Augusto Ciurleo. La idea del proyecto es facilitar la busqueda de jugadores y/o equipos para una bolsa de comercio en el ambito de torneos de futbol, ya sea para F5, F8 o F11</p>
+            <p>Proximamente: Fixture, Tabla de posiciones, Tabla de goleadores, Goles, Asistencias, Tarjetas.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 d-flex justify-content-center flex-column align-items-center">
+                <h2>Equipos</h2>
+                <img src="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2018/09/05/15361688477367.jpg" alt="">
+                <p class="fs-4">Carga de equipos, nombre,director tecnico, cantidad de jugadores y tipo de torneo a participar</p>
+                <p><a class="btn btn-secondary" href="{% url 'Equipos' %}" role="button">Ver detalle &raquo;</a></p>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center flex-column align-items-center">
+                <h2>Jugadores</h2>
+                <img src="https://img.freepik.com/vector-premium/equipo-futbol-alaves_8218-441.jpg?w=826" alt="">
+                <p class="fs-4">Carga de jugadores, nombre completo, dorsal, posicion de juego, equipo donde juega.</p>
+                <p><a class="btn btn-secondary" href="{% url 'Jugadores' %}" role="button">Ver detalle &raquo;</a></p>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center flex-column align-items-center">
+                <h2>Torneos</h2>
+                <img src="https://soccerinteraction.com/wp-content/uploads/2019/01/Torneo-futbol-internacional-10.jpg" alt="">
+                <p class="fs-4">Visualizacion de los distintos tipos de torneos. Equipos que juegan el torneo.</p>
+                <p><a class="btn btn-secondary" href="{% url 'Torneos' %}" role="button">Ver detalle &raquo;</a></p>
+            </div>
+        </div>
+
+        <hr>
+
+    </div>
+
+</main>
+{% endblock %}

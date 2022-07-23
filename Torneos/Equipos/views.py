@@ -1,16 +1,13 @@
-from multiprocessing import AuthenticationError
+
 from typing import List
-from django.shortcuts import redirect, render, HttpResponse
-from django.http import HttpResponse
-from Equipos.models import Equipos, Jugadores, PosicionesJugadores, Torneos, Avatar, User
-from Equipos.forms import RegisterForm, LoginForm
+from django.shortcuts import redirect, render
+from Equipos.models import Equipos, Jugadores
+from Equipos.forms import RegisterForm, LoginForm, UserEditForm
 
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 
-from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth.decorators import login_required
@@ -135,13 +132,10 @@ class CustomLoginView(LoginView):
         remember_me = form.cleaned_data.get('remember_me')
 
         if not remember_me:
-            # set session expiry to 0 seconds. So it will automatically close the session after the browser is closed.
             self.request.session.set_expiry(0)
 
-            # Set session as modified to force data updates/cookie to be saved.
             self.request.session.modified = True
 
-        # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView, self).form_valid(form)
 
 def dispatch(self, request, *args, **kwargs):
@@ -169,3 +163,26 @@ def futbol11(request):
 
 def construccion(request):
     return render(request, "construccion.html")
+
+def about(request):
+    return render(request, "about.html")
+
+@login_required    
+def editarPerfil(request):
+    
+    usuario = request.user
+
+    if request.method == 'POST':
+        miFormulario = UserEditForm(request.POST, instance=usuario)
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.username = informacion['username']
+            usuario.save()
+
+            return render(request, "inicio.html", {"usuario": usuario})
+    else:
+        miFormulario = UserEditForm({'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name})
+    return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario": usuario})

@@ -33,12 +33,13 @@
             <a class="navbar-brand" href="{% url 'Equipos' %}">Equipos</a>
             <a class="navbar-brand" href="{% url 'Jugadores' %}">Jugadores</a>
             <a class="navbar-brand" href="{% url 'Torneos' %}">Torneos</a>
+            <a class="navbar-brand" href="{% url 'About' %}">Acerca de</a>
             
             <div class="d-flex flex-row justify-content-center align-items-center align-self-end">
                 {% if user.is_authenticated %}
                 <img src="{{avatar}}" alt="">
                 <p class="text-muted small mb-4 mb-lg-0">Hola, {{user.username}}</p>
-                <a class="btn btn-sm btn-secondary m-1" href="{% url 'Construccion' %}">Editar Perfil</a>
+                <a class="btn btn-sm btn-secondary m-1" href="{% url 'EditarPerfil' %}">Editar Perfil</a>
                 <a class="btn btn-sm btn-secondary m-1" href="{% url 'Logout' %}">Cerrar Sesion</a>
                 {% else %}
                 <a class="btn btn-sm btn-secondary m-1" href="{% url 'Login' %}">Iniciar Sesion</a>
@@ -91,7 +92,7 @@
                         <div class="col-auto">
 
                             <button type="submit" class="btn btn-outline-light mb-4">
-                                Suscribirse
+                                <a href="{% url 'Construccion' %}">Suscribirse</a>
                             </button>
                         </div>
 
